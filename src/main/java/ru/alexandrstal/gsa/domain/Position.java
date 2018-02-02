@@ -1,13 +1,21 @@
 package ru.alexandrstal.gsa.domain;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class GraphPosition {
+public class Position {
 
+    @NotNull
     private Integer height;
+
+    @NotNull
     private Integer width;
+
+    @NotNull
     private Integer xposition;
+
+    @NotNull
     private Integer yposition;
 
     public Integer getHeight() {

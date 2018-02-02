@@ -18,8 +18,6 @@ import java.util.Properties;
 public class Config {
 
     private static final String[] ENTITYMANAGER_PACKAGES_TO_SCAN = {"ru.alexandrstal.gsa.domain"};
-    private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-    private static final String PROPERTY_NAME_HBM2DLL = "hibernate.hbm2ddl.auto";
 
     @Autowired
     private Environment env;
@@ -59,8 +57,9 @@ public class Config {
 
         Properties properties = new Properties();
 
-        properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
-        properties.put(PROPERTY_NAME_HBM2DLL, env.getProperty(PROPERTY_NAME_HBM2DLL));
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
 
         return properties;

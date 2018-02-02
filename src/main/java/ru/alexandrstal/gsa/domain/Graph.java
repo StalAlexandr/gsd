@@ -1,27 +1,25 @@
 package ru.alexandrstal.gsa.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-public class Graph implements Serializable{
+@JsonSerialize(using = ru.alexandrstal.gsa.domain.serializer.GraphSerializer.class)
+public class Graph {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @NotNull
-    @Embedded
-    private GraphPosition position;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Vertex from;
 
-    @OneToMany(mappedBy = "from")
-    private Set<GraphRelation> from = new HashSet<>();
-
-    @OneToMany(mappedBy = "to")
-    private Set<GraphRelation> to  = new HashSet<>();
+    @NotNull
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Vertex to;
 
     public Long getId() {
         return id;
@@ -31,29 +29,21 @@ public class Graph implements Serializable{
         this.id = id;
     }
 
-    public GraphPosition getPosition() {
-        return position;
-    }
-
-    public void setPosition(GraphPosition position) {
-        this.position = position;
-    }
-
-    public Set<GraphRelation> getFrom() {
+    public Vertex getFrom() {
         return from;
     }
 
-    public void setFrom(Set<GraphRelation> from) {
+    public void setFrom(Vertex from) {
         this.from = from;
+        from.getFrom().add(this);
     }
 
-    public Set<GraphRelation> getTo() {
+    public Vertex getTo() {
         return to;
     }
 
-    public void setTo(Set<GraphRelation> to) {
+    public void setTo(Vertex to) {
+        to.getTo().add(this);
         this.to = to;
     }
 }
-
-
