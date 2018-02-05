@@ -1,15 +1,17 @@
 package ru.alexandrstal.gsa.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.alexandrstal.gsa.domain.Vertex;
 import ru.alexandrstal.gsa.service.VertexService;
 
 import java.util.List;
 
+
+@CrossOrigin(allowCredentials = "true")
 @RestController
 @RequestMapping(value = "api")
 public class MainController {
@@ -23,11 +25,21 @@ public class MainController {
         return "hello";
     }
 
+    @CrossOrigin(allowCredentials = "true")
     @RequestMapping(value = "vertex", method = RequestMethod.GET)
-    public List<Vertex> findAll(){
-        return vertexService.findAll();
+    public ResponseEntity<List<Vertex>> findAll(){
+
+        System.out.println("ASDFHGFHGFHGFHGFHGFH");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Headers", "x-requested-with");
+        headers.add("Access-Control-Allow-Origin", "*");
+
+        return new ResponseEntity<List<Vertex>>(vertexService.findAll(),headers, HttpStatus.OK);
+      //  return vertexService.findAll();
     }
 
+    @CrossOrigin("http://localhost")
     @RequestMapping(value = "vertex/{id}", method = RequestMethod.GET)
     public Vertex find(@PathVariable("id") Long id){
         return vertexService.findById(id);
