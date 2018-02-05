@@ -1,0 +1,16 @@
+{
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "nodeapp",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Stal AN",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "cors-expressjs": "^0.1.2",
+    "express": "^4.13.3"
+  }
+}
