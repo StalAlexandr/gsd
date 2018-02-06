@@ -4,3 +4,4 @@ target
 .settings
 .classpath
 .idea
+frontend/node_modules

@@ -1,8 +1,6 @@
 package ru.alexandrstal.gsa.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.alexandrstal.gsa.domain.Vertex;
 import ru.alexandrstal.gsa.service.VertexService;
@@ -26,9 +24,6 @@ public class MainController {
 
     @RequestMapping(value = "vertex", method = RequestMethod.GET)
     public List<Vertex> findAll(){
-
-        System.out.println("ASDFHGFHGFHGFHGFHGFH");
-
         return vertexService.findAll();
     }
 
