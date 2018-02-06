@@ -2,8 +2,8 @@ package ru.alexandrstal.gsa.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.alexandrstal.gsa.domain.Vertex;
-import ru.alexandrstal.gsa.service.VertexService;
+import ru.alexandrstal.gsa.domain.Node;
+import ru.alexandrstal.gsa.service.NodeService;
 
 import java.util.List;
 
@@ -14,21 +14,21 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    VertexService vertexService;
+    NodeService nodeService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String hello(){
-        vertexService.init();
+        nodeService.init();
         return "hello";
     }
 
     @RequestMapping(value = "vertex", method = RequestMethod.GET)
-    public List<Vertex> findAll(){
-        return vertexService.findAll();
+    public List<Node> findAll(){
+        return nodeService.findAll();
     }
 
     @RequestMapping(value = "vertex/{id}", method = RequestMethod.GET)
-    public Vertex find(@PathVariable("id") Long id){
-        return vertexService.findById(id);
+    public Node find(@PathVariable("id") Long id){
+        return nodeService.findById(id);
     }
 }

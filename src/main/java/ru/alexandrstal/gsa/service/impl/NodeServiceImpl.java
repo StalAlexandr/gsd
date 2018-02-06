@@ -2,9 +2,10 @@ package ru.alexandrstal.gsa.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.alexandrstal.gsa.domain.Graph;
+import ru.alexandrstal.gsa.domain.Operation;
 import ru.alexandrstal.gsa.domain.Position;
-import ru.alexandrstal.gsa.domain.Vertex;
-import ru.alexandrstal.gsa.service.VertexService;
+import ru.alexandrstal.gsa.domain.Node;
+import ru.alexandrstal.gsa.service.NodeService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class VertexServiceImpl implements VertexService {
+public class NodeServiceImpl implements NodeService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -20,6 +21,8 @@ public class VertexServiceImpl implements VertexService {
     @Override
     @Transactional
     public void init() {
+
+        System.out.print("AAAAAAAA");
 
         Position position = new Position();
         position.setHeight(100);
@@ -33,27 +36,38 @@ public class VertexServiceImpl implements VertexService {
         position2.setXposition(5);
         position2.setYposition(7);
 
-        Vertex vertex1 = new Vertex();
-        vertex1.setPosition(position);
+        Node node1 = new Node();
+        node1.setPosition(position);
 
-        Vertex vertex2 = new Vertex();
-        vertex2.setPosition(position2);
+
+        Operation operation1 = new Operation("1", "Заявка подана");
+
+        Operation operation2 = new Operation("1", "Патент выдан");
+
+
+        Node node2 = new Node();
+        node2.setPosition(position2);
+
 
         Graph graph = new Graph();
-        graph.setFrom(vertex1);
-        graph.setTo(vertex2);
+        graph.setFrom(node1);
+        graph.setTo(node2);
+
+        operation1.setNode(node1);
+        operation2.setNode(node2);
+
 
         entityManager.persist(graph);
 
     }
 
-    public Vertex findById(Long id) {
-        return entityManager.find(Vertex.class, id);
+    public Node findById(Long id) {
+        return entityManager.find(Node.class, id);
     }
 
     @Override
-    public List<Vertex> findAll() {
-        return entityManager.createQuery("select v from Vertex v", Vertex.class).getResultList();
+    public List<Node> findAll() {
+        return entityManager.createQuery("select v from Node v", Node.class).getResultList();
     }
 
     ;

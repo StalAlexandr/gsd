@@ -15,11 +15,11 @@ public class Graph {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Vertex from;
+    private Node from;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Vertex to;
+    private Node to;
 
     public Long getId() {
         return id;
@@ -29,20 +29,20 @@ public class Graph {
         this.id = id;
     }
 
-    public Vertex getFrom() {
+    public Node getFrom() {
         return from;
     }
 
-    public void setFrom(Vertex from) {
+    public void setFrom(Node from) {
         this.from = from;
         from.getFrom().add(this);
     }
 
-    public Vertex getTo() {
+    public Node getTo() {
         return to;
     }
 
-    public void setTo(Vertex to) {
+    public void setTo(Node to) {
         to.getTo().add(this);
         this.to = to;
     }

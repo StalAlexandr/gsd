@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Vertex implements Serializable{
+public class Node implements Serializable{
 
     @Id
     @GeneratedValue
@@ -19,6 +19,9 @@ public class Vertex implements Serializable{
 
     @OneToMany(mappedBy = "from")
     private Set<Graph> from = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    Operation operation;
 
     @OneToMany(mappedBy = "to")
     private Set<Graph> to  = new HashSet<>();
@@ -55,6 +58,13 @@ public class Vertex implements Serializable{
         this.to = to;
     }
 
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
+    }
 }
 
 
