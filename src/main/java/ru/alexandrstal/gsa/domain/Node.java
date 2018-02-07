@@ -21,7 +21,7 @@ public class Node implements Serializable{
     private Set<Graph> from = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    Operation operation;
+    Status status;
 
     @OneToMany(mappedBy = "to")
     private Set<Graph> to  = new HashSet<>();
@@ -58,12 +58,12 @@ public class Node implements Serializable{
         this.to = to;
     }
 
-    public Operation getOperation() {
-        return operation;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setOperation(Operation operation) {
-        this.operation = operation;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
 

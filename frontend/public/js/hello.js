@@ -21,7 +21,7 @@ app.controller('myCtrl', function ($scope, $http, $element) {
             for (var i in data) {
                 var node = {
                     id: data[i].id,
-                    label: data[i].operation.name,
+                    label: data[i].status.name,
                     x: data[i].position.xposition,
                     y: data[i].position.yposition,
                     allowedToMoveX: false,

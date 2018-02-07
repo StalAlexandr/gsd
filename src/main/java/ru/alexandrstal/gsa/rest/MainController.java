@@ -18,7 +18,6 @@ public class MainController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String hello(){
-        nodeService.init();
         return "hello";
     }
 

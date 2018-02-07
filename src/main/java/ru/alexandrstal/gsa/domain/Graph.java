@@ -21,6 +21,9 @@ public class Graph {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Node to;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Operation operation;
+
     public Long getId() {
         return id;
     }
@@ -45,5 +48,13 @@ public class Graph {
     public void setTo(Node to) {
         to.getTo().add(this);
         this.to = to;
+    }
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
 }
