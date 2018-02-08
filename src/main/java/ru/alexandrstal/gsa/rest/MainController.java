@@ -2,8 +2,10 @@ package ru.alexandrstal.gsa.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.alexandrstal.gsa.domain.Application;
 import ru.alexandrstal.gsa.domain.Node;
-import ru.alexandrstal.gsa.service.NodeService;
+import ru.alexandrstal.gsa.service.ApplicationService;
+import ru.alexandrstal.gsa.service.NetworkService;
 
 import java.util.List;
 
@@ -14,20 +16,24 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    NodeService nodeService;
+    NetworkService networkService;
+
+    @Autowired
+    ApplicationService applicationService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String hello(){
         return "hello";
     }
 
-    @RequestMapping(value = "vertex", method = RequestMethod.GET)
+    @RequestMapping(value = "network", method = RequestMethod.GET)
     public List<Node> findAll(){
-        return nodeService.findAll();
+        return networkService.findAll();
     }
 
-    @RequestMapping(value = "vertex/{id}", method = RequestMethod.GET)
-    public Node find(@PathVariable("id") Long id){
-        return nodeService.findById(id);
+    @RequestMapping(value = "application/{id}", method = RequestMethod.GET)
+    public Application findApplicationByExtidappli(@PathVariable("id")String extidappli){
+        return applicationService.findByExtidappli(extidappli);
     }
+
 }

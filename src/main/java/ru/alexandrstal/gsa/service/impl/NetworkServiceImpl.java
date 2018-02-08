@@ -1,19 +1,15 @@
 package ru.alexandrstal.gsa.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.alexandrstal.gsa.domain.Graph;
-import ru.alexandrstal.gsa.domain.Status;
-import ru.alexandrstal.gsa.domain.Position;
 import ru.alexandrstal.gsa.domain.Node;
-import ru.alexandrstal.gsa.service.NodeService;
+import ru.alexandrstal.gsa.service.NetworkService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class NodeServiceImpl implements NodeService {
+public class NetworkServiceImpl implements NetworkService {
 
     @PersistenceContext
     private EntityManager entityManager;

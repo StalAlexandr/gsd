@@ -28,10 +28,6 @@ public class Graph {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Node getFrom() {
         return from;
     }

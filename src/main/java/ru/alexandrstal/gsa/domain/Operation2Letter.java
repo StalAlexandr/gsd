@@ -23,10 +23,6 @@ public class Operation2Letter {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Operation getOperation() {
         return operation;
     }

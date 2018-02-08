@@ -1,17 +1,54 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http, $element) {
 
-    $scope.doSome = function (text) {
-        $scope.selectedOperation = text;
-        $scope.$apply();
+    $scope.network = {};
+
+    $scope.application={};
+
+    $scope.selectedExtidappli = '';
+
+    $scope.selectedOperation = {};
+
+    $scope.setDefaultColors = function () {
+        for (var id in $scope.network.body.nodes){
+            var node = $scope.network.body.nodes[id];
+            node.setOptions({
+                font: {
+                    background: '#87CEFA'
+                }
+            });
+        }
     };
 
+    $scope.getApplication = function(){
+        $http.get('http://localhost:9000/api/application/'+$scope.selectedExtidappli).then(function (response) {
+
+            if (!response.data.id){
+                alert('Заявка не найдена');
+                return;
+            }
+
+            $scope.application = response.data;
+
+            $scope.setDefaultColors();
+            var node = $scope.network.body.nodes[$scope.application.status.code];
+            console.log(node);
+            node.setOptions({
+                font: {
+                    background: '#FFA07A'
+                }
+            });
+            $scope.network.body.emitter.emit('_dataChanged')
+        });
+    }
+
     $scope.init = function () {
-        $scope.selectedOperation = {};
+
         var nodesList = [];
+
         var fromList = [];
 
-        $http.get('http://localhost:9000/api/vertex').then(function (response) {
+        $http.get('http://localhost:9000/api/network').then(function (response) {
             var data = response.data;
 
             for (var i in data) {
@@ -56,30 +93,24 @@ app.controller('myCtrl', function ($scope, $http, $element) {
                     heightConstraint:
                         {minimum: 60}
                 },
-
-                //    width: '800px',
-                //    height: '800px',
                 interaction: {dragNodes: false, zoomView: false, dragView: false},  //, dragView: false
 
                 physics: {enabled: false},
 
             };
 
-            var network = new vis.Network(container, data, options);
-            network.on("click", function (properties) {
+           $scope.network = new vis.Network(container, data, options);
+            $scope.setDefaultColors();
+            $scope.network.on("click", function (properties) {
                 var nodeIds = properties.nodes;
                 var edgeIds = properties.edges;
                 if (edgeIds[0]) {
-                    $scope.doSome(edges.get(edgeIds[0]).name);
                     $scope.selectedOperation = edges.get(edgeIds[0]).operation;
                     $scope.$apply();
                     console.log($scope.selectedOperation);
                 }
             });
-
         });
-
     }
-
 });
 

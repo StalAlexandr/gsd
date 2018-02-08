@@ -1,14 +1,11 @@
 package ru.alexandrstal.gsa;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.stereotype.Component;
-import ru.alexandrstal.gsa.service.NodeService;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -23,7 +20,6 @@ import java.sql.SQLException;
             Resource resource = new ClassPathResource("init-schema.sql");
             ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
 
-         //   nodeService.init();
         }
 
 }

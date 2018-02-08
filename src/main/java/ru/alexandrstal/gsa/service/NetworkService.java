@@ -4,9 +4,10 @@ import ru.alexandrstal.gsa.domain.Node;
 
 import java.util.List;
 
-public interface NodeService {
+public interface NetworkService {
 
     Node findById(Long id);
 
     List<Node> findAll();
+
 }

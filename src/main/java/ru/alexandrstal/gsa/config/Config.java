@@ -61,7 +61,6 @@ public class Config {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
-
         return properties;
     }
 

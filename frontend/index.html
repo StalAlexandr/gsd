@@ -2,15 +2,11 @@
 <html>
 <script src="/public/js/lib/angular.min.js"></script>
 <script src="/public/js/lib/vis.js"></script>
-<script src="/public/js/hello.js"></script>
+<script src="/public/js/controller.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="public/css/main.css">
 
-<style>
-
-</style>
 
 <body>
 <div class="title">
@@ -28,7 +24,10 @@
                         <tr>
                             <td>
                                 <div class="appsearch">
-                                    <span class = "localtitle" >Выбор заявки: </span><input size="10"/><button>OK</button>
+                                    <br>
+                                    <input placeholder="Выбор заявки" ng-model="selectedExtidappli" size="10">
+                                        <button ng-click="getApplication()" ng-show="selectedExtidappli.length>0">OK</button>
+                                    {{application.title}}
                                 </div>
                             </td>
                         </tr>

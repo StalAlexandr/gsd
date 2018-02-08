@@ -24,8 +24,6 @@ INSERT INTO public.graph(id, from_id, to_id) VALUES (5, 1, 6);
 INSERT INTO public.graph(id, from_id, to_id) VALUES (6, 7, 6);
 INSERT INTO public.graph(id, from_id, to_id) VALUES (7, 3, 7);
 INSERT INTO public.graph(id, from_id, to_id) VALUES (8, 7, 2);
--- INSERT INTO public.graph(id, from_id, to_id) VALUES (9, 4, 7);
--- INSERT INTO public.graph(id, from_id, to_id) VALUES (10, 7, 4);
 
 
 INSERT INTO public.operation( id, code, name) VALUES (1, 1, 'Начать экспертизу');
@@ -52,6 +50,8 @@ INSERT INTO public.letter(id, code, name) VALUES (5, 5, 'О начале экс�
 INSERT INTO public.letter(id, code, name) VALUES (6, 6, 'О готовности выдать патент');
 INSERT INTO public.letter(id, code, name) VALUES (7, 7, 'Патентная грамота');
 
+INSERT INTO public.application(id, extidappli, title, status_id) VALUES (1, '111', 'Вечный двигатель', 1);
+INSERT INTO public.application(id, extidappli, title, status_id) VALUES (2, '222', 'Гравицапа', 7);
 
 
 update public.graph set operation_id=1 where id=1;
