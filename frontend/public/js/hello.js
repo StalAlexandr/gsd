@@ -1,17 +1,13 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http, $element) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
 
     $scope.doSome = function (text) {
-        $scope.someText = text;
+        $scope.currentOperation = text;
         $scope.$apply();
     };
 
     $scope.init = function () {
-
-
-        $scope.someText = 'aaa';
+        $scope.currentOperation = '';
         var nodesList = [];
         var fromList = [];
 
@@ -30,7 +26,14 @@ app.controller('myCtrl', function ($scope, $http, $element) {
                 };
                 var elementFrom = data[i].from;
                 for (var j in elementFrom) {
-                    var currentFrom = {from: elementFrom[j].from, to: elementFrom[j].to};
+                    var currentFrom = {
+                        arrows: 'to',
+                        id: elementFrom[j].id,
+                        from: elementFrom[j].from,
+                        to: elementFrom[j].to,
+                        label: elementFrom[j].code,
+                        name: elementFrom[j].name
+                    };
                     fromList.push(currentFrom);
                 }
                 nodesList.push(node);
@@ -38,11 +41,12 @@ app.controller('myCtrl', function ($scope, $http, $element) {
 
             var nodes = new vis.DataSet(nodesList);
             var edges = new vis.DataSet(fromList);
-            var container = document.querySelector('#mynetwork');
+            var container = document.querySelector('#stdnetwork');
             var data = {
                 nodes: nodes,
                 edges: edges
             };
+
             var options = {
 
                 nodes: {
@@ -53,26 +57,23 @@ app.controller('myCtrl', function ($scope, $http, $element) {
                         {minimum: 60}
                 },
 
-                width: '800px',
-                height: '800px',
-                interaction: {dragNodes: false},
+                //    width: '800px',
+                //    height: '800px',
+                interaction: {dragNodes: false, zoomView: false, dragView: false},  //, dragView: false
 
-                physics: {enabled: false}
+                physics: {enabled: false},
 
             };
+
             var network = new vis.Network(container, data, options);
-
-
             network.on("click", function (properties) {
 
                 var nodeIds = properties.nodes;
-                console.log('node ids:', nodeIds);
-                console.log('nodes:', nodes.get(nodeIds));
 
                 var edgeIds = properties.edges;
-                console.log('edge ids:', edgeIds);
-                console.log('edges:', edges.get(edgeIds));
-
+                if (edgeIds[0]) {
+                    $scope.doSome(edges.get(edgeIds[0]).name);
+                }
             });
 
         });

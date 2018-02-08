@@ -1,15 +1,128 @@
 <!DOCTYPE html>
 <html>
 <script src="/public/js/lib/angular.min.js"></script>
-	<script src="/public/js/lib/vis.js"></script>
+<script src="/public/js/lib/vis.js"></script>
 <script src="/public/js/hello.js"></script>
-	
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<style>
+    #stdnetwork {
+        height: 500pt;
+        width: 300pt;
+        background-color: antiquewhite;
+        border: 1px solid lightgray;
+    }
+
+    #info {
+        height: 500pt;
+        width: 600pt;
+        background-color: burlywood;
+        border: 1px solid lightgray;
+    }
+
+    .appsearch {
+        height: 50pt;
+        width: 600pt;
+        background-color: cornsilk;
+        border: 1px solid lightgray;
+    }
+
+    .operation {
+        height: 50pt;
+        width: 600pt;
+        background-color: cornsilk;
+        border: 1px solid lightgray;
+    }
+
+    .documents {
+        height: 150pt;
+        width: 600pt;
+        background-color: cornsilk;
+        border: 1px solid lightgray;
+    }
+
+    .letters {
+        height: 150pt;
+        width: 600pt;
+        background-color: cornsilk;
+        border: 1px solid lightgray;
+    }
+
+    .controlpanel {
+        height: 100pt;
+        width: 600pt;
+        background-color: cornsilk;
+        border: 1px solid lightgray;
+    }
+
+</style>
+
 <body>
 
 <div ng-init='init()' ng-app="myApp" ng-controller="myCtrl">
-	{{someText}}
-	<div id="mynetwork" ></div>
+    <table>
+        <tr><span>Графическая система документооборота</span></tr>
+        <tr>
+            <td>
+                <div id="stdnetwork"></div>
+            </td>
+            <td>
+                <div id="info">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="appsearch">
+                                    <span>Выбор заявки: </span><input size="10"/><button>OK</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="operation">
+                                    <span>Операция: {{currentOperation}} </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="documents">
+                                    <span>Документы: </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="letters">
+                                    <span>Письма: </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="controlpanel">5</div>
+                            </td>
+                        </tr>
+                        </tr>
+                    </table>
+                </div>
+            </td>
 
+        </tr>
+    </table>
 </div>
+
 </body>
 </html>
