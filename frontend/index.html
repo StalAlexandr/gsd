@@ -92,7 +92,7 @@
                         <tr>
                             <td>
                                 <div class="operation">
-                                    <span>Операция: {{currentOperation}} </span>
+                                    <span>Операция: {{currentOperation.name}} </span>
                                 </div>
                             </td>
                         </tr>
@@ -100,6 +100,9 @@
                             <td>
                                 <div class="documents">
                                     <span>Документы: </span>
+                                    <div ng-repeat="document in currentOperation.documents">{{x}}
+                                        <br><input type="checkbox">{{document.name}}
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -107,6 +110,9 @@
                             <td>
                                 <div class="letters">
                                     <span>Письма: </span>
+                                    <div ng-repeat="letter in currentOperation.letters">{{x}}
+                                        <br><input type="checkbox">{{letter.name}}
+                                    </div>
                                 </div>
                             </td>
                         </tr>

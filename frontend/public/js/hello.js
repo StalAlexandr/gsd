@@ -7,7 +7,7 @@ app.controller('myCtrl', function ($scope, $http, $element) {
     };
 
     $scope.init = function () {
-        $scope.currentOperation = '';
+        $scope.currentOperation = {};
         var nodesList = [];
         var fromList = [];
 
@@ -31,8 +31,8 @@ app.controller('myCtrl', function ($scope, $http, $element) {
                         id: elementFrom[j].id,
                         from: elementFrom[j].from,
                         to: elementFrom[j].to,
-                        label: elementFrom[j].code,
-                        name: elementFrom[j].name
+                        label: elementFrom[j].operation.code,
+                        operation: elementFrom[j].operation
                     };
                     fromList.push(currentFrom);
                 }
@@ -67,12 +67,13 @@ app.controller('myCtrl', function ($scope, $http, $element) {
 
             var network = new vis.Network(container, data, options);
             network.on("click", function (properties) {
-
                 var nodeIds = properties.nodes;
-
                 var edgeIds = properties.edges;
                 if (edgeIds[0]) {
                     $scope.doSome(edges.get(edgeIds[0]).name);
+                    $scope.currentOperation = edges.get(edgeIds[0]).operation;
+                    $scope.$apply();
+                    console.log($scope.currentOperation);
                 }
             });
 

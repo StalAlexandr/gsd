@@ -27,8 +27,7 @@ public class GraphSerializer extends StdSerializer<Graph> {
         jgen.writeNumberField("to", value.getTo().getId());
         jgen.writeStringField("code", value.getOperation().getCode());
         jgen.writeStringField("name", value.getOperation().getName());
-
-
+        jgen.writeObjectField("operation", value.getOperation());
         jgen.writeEndObject();
     }
 }
