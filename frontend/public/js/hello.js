@@ -2,12 +2,12 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http, $element) {
 
     $scope.doSome = function (text) {
-        $scope.currentOperation = text;
+        $scope.selectedOperation = text;
         $scope.$apply();
     };
 
     $scope.init = function () {
-        $scope.currentOperation = {};
+        $scope.selectedOperation = {};
         var nodesList = [];
         var fromList = [];
 
@@ -71,9 +71,9 @@ app.controller('myCtrl', function ($scope, $http, $element) {
                 var edgeIds = properties.edges;
                 if (edgeIds[0]) {
                     $scope.doSome(edges.get(edgeIds[0]).name);
-                    $scope.currentOperation = edges.get(edgeIds[0]).operation;
+                    $scope.selectedOperation = edges.get(edgeIds[0]).operation;
                     $scope.$apply();
-                    console.log($scope.currentOperation);
+                    console.log($scope.selectedOperation);
                 }
             });
 

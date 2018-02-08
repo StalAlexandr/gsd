@@ -19,9 +19,7 @@ import java.sql.SQLException;
 
         public static void main(String[] args) throws SQLException {
             ConfigurableApplicationContext context =  SpringApplication.run(Application.class, args);
-
             DataSource dataSource = context.getBean(DataSource.class); // <-- here
-
             Resource resource = new ClassPathResource("init-schema.sql");
             ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
 
