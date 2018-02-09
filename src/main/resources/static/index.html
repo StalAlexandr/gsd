@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<script src="/js/lib/angular.min.js"></script>
+<script src="/js/lib/vis.js"></script>
+<script src="/js/controller.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/main.css">
+
+
+<body>
+<div class="title">
+    <span>Графическая система документооборота</span>
+</div>
+<div ng-init='init()' ng-app="myApp" ng-controller="myCtrl">
+    <table>
+        <tr>
+            <td>
+                <div id="stdnetwork"></div>
+            </td>
+            <td>
+                <div id="info">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="appsearch">
+                                    <br>
+                                    <input placeholder="Выбор заявки" ng-model="selectedExtidappli" size="10">
+                                        <button ng-click="getApplication()" ng-show="selectedExtidappli.length>0">OK</button>
+                                    {{application.title}}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="operation">
+                                    <span class = "localtitle">Операция: {{selectedOperation.name}} </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="documents">
+                                    <span class = "localtitle">Документы: </span>
+                                    <div ng-repeat="document in selectedOperation.documents">{{x}}
+                                        <br><input type="checkbox" checked>  {{document.name}}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="letters">
+                                    <span class = "localtitle">Письма: </span>
+                                    <div ng-repeat="letter in selectedOperation.letters">{{x}}
+                                        <br><input type="checkbox" checked>  {{letter.name}}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                <div class="controlpanel">
+                                    <div class = "localtitle" class="controlpanel"><button>Провести оперцию!</button></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
