@@ -57,3 +57,33 @@
 .localtitle {
     font-weight: bold;
 }
+
+.gsd {
+    background: #FFE6EF;
+}
+.node .shape {
+    stroke: blue;
+    fill: #87CEFA;
+}
+
+.node:hover .shape {
+    stroke-width: 2px;
+    fill: #87CEFA;
+}
+
+.node.selected .shape {
+    fill: orange;
+}
+
+.link {
+    stroke: blue;
+    stroke-width: 2px;
+}
+
+.link:hover {
+    stroke-width: 3px;
+}
+
+.link.selected {
+    stroke: red;
+}

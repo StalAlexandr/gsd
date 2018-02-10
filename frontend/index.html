@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<script src="/public/js/lib/angular.min.js"></script>
-<script src="/public/js/lib/vis.js"></script>
+<script src="/public/js/lib/angular.js"></script>
 <script src="/public/js/controller.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="public/css/main.css">
-
 
 <body>
 <div class="title">
@@ -15,8 +11,35 @@
 <div ng-init='init()' ng-app="myApp" ng-controller="myCtrl">
     <table>
         <tr>
-            <td>
-                <div id="stdnetwork"></div>
+            <td class="gsd">
+              <svg ng-hide="network == null" "width="500" height="500">
+                <g ng-repeat="node in network.nodes"
+                   ng-class="{node: true, selected: isNodeSelected(node)}"
+                   id="{{node.id}}"
+                   transform="translate({{node.x}},{{node.y}})"
+                   ng-click="selectStatus(node)">
+                    <circle class="shape" r="40"></circle>
+                    <text text-anchor="middle">{{node.label.substring(0,10)}}</text>
+                </g>
+
+                <!-- TODO maybe wrap in g element? -->
+                <path ng-repeat-start="link in network.links"
+                      ng-class="{link: true, selected: isLinkSelected(link)}"
+                      ng-init="from=getNodeById(link.from);to=getNodeById(link.to);"
+                      id="l{{from.id}}-{{to.id}}"
+                      d="M{{from.x}},{{from.y}}L{{to.x}},{{to.y}}"
+                      ng-click="selectOperation(link)">
+                </path>
+                <text ng-repeat-end
+                      ng-click="selectOperation(link)">
+                  <textPath
+                            ng-init="from=getNodeById(link.from);to=getNodeById(link.to);"
+                            xlink:href="" ng:href="#l{{from.id}}-{{to.id}}"
+                            startOffset="50%">
+                    {{link.label}}
+                  </textPath>
+                </text>
+              </svg>
             </td>
             <td>
                 <div id="info">
