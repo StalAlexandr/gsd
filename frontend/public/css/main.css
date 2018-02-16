@@ -77,11 +77,10 @@
 
 .link {
     stroke: blue;
-    stroke-width: 2px;
 }
 
 .link:hover {
-    stroke-width: 3px;
+    fill: orange;
 }
 
 .link.selected {

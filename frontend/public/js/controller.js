@@ -39,6 +39,11 @@ app.controller('myCtrl', function ($scope, $http, $element) {
           })
         }
     }
+    $scope.getPositionBetween = function(link) {
+      var p1 = $scope.getNodeById(link.from);
+      var p2 = $scope.getNodeById(link.to);
+      return {x: (p1.x + p2.x - 5) / 2, y: (p1.y + p2.y + 5) / 2}
+    }
 
     $scope.getApplication = function(){
         $http.get('http://localhost:9000/api/application/'+$scope.selectedExtidappli).then(function (response) {
