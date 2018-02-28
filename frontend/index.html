@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
-<script src="/public/js/lib/angular.min.js"></script>
-<script src="/public/js/lib/vis.js"></script>
+<script src="/public/js/lib/angular.js"></script>
+<script src="/public/js/lib/d3.js"></script>
 <script src="/public/js/controller.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/public/js/components/gsd.js"></script>
 <link rel="stylesheet" href="public/css/main.css">
-
 
 <body>
 <div class="title">
@@ -16,7 +14,9 @@
     <table>
         <tr>
             <td>
-                <div id="stdnetwork"></div>
+              <gsd network="network"
+                   node-click="selectStatus(node, nextLink)"
+                   link-click="selectOperation(link)"/>
             </td>
             <td>
                 <div id="info">
