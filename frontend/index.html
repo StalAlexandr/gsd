@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<script src="/public/js/lib/angular.min.js"></script>
-<script src="/public/js/lib/vis.js"></script>
+<script src="/public/js/lib/angular.js"></script>
 <script src="/public/js/controller.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="public/css/main.css">
-
 
 <body>
 <div class="title">
@@ -15,8 +11,50 @@
 <div ng-init='init()' ng-app="myApp" ng-controller="myCtrl">
     <table>
         <tr>
-            <td>
-                <div id="stdnetwork"></div>
+            <td class="gsd" style="width: 500px">
+              <svg ng-hide="network == null" width="100%" height="500">
+                <defs>
+                  <marker id="end-arrow"
+                          viewBox="0 -5 10 10"
+                          refX="47"
+                          markerWidth="11"
+                          markerHeight="11"
+                          orient="auto">
+                      <path d="M0,-5L10,0L0,5" stroke="black"></path>
+                  </marker>
+                </defs>
+                </path>
+                <!-- TODO maybe wrap in g element? -->
+                <path ng-repeat-start="link in network.links"
+                      ng-class="{link: true, selected: isLinkSelected(link)}"
+                      ng-init="from=getNodeById(link.from);to=getNodeById(link.to);"
+                      id="l{{from.id}}-{{to.id}}"
+                      d="M{{from.x}},{{from.y}}L{{to.x}},{{to.y}}"
+                      marker-end="url(#end-arrow)"
+                      ng-click="selectOperation(link)">
+                </path>
+                <text ng-repeat-end
+                      ng-click="selectOperation(link)"
+                      ng-init="between=getPositionBetween(link);"
+                      transform="translate({{between.x}},{{between.y}})">
+                    {{link.label}}
+                </text>
+                <g ng-repeat="node in network.nodes"
+                   ng-class="{node: true, selected: isNodeSelected(node)}"
+                   id="{{node.id}}"
+                   transform="translate({{node.x}},{{node.y}})"
+                   ng-click="selectStatus(node)">
+                    <circle class="shape" r="40"></circle>
+                    <text text-anchor="middle"
+                          ng-init="textParts=node.label.split(' ')"
+                          transform="translate(0, {{ - (textParts.length + 1) * 10 + 7}})">
+                      <tspan ng-repeat="textPart in textParts" x="0" dy="15">
+                        {{textPart}}
+                      </tspan>
+                    </text>
+                </g>
+
+              </svg>
             </td>
             <td>
                 <div id="info">

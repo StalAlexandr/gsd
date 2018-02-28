@@ -1,4 +1,9 @@
 var app = angular.module('myApp', []);
+app.filter('svgHref', function ($sce) {
+    return function (val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+  });
 app.controller('myCtrl', function ($scope, $http, $element) {
 
     $scope.network = {};
@@ -9,16 +14,36 @@ app.controller('myCtrl', function ($scope, $http, $element) {
 
     $scope.selectedOperation = {};
 
-    $scope.setDefaultColors = function () {
-        for (var id in $scope.network.body.nodes){
-            var node = $scope.network.body.nodes[id];
-            node.setOptions({
-                font: {
-                    background: '#87CEFA'
-                }
-            });
+    $scope.getNodeById = function(id) {
+        var nodes = $scope.network.nodes;
+        return nodes.find(function (node) {
+          return node.id == id;
+        })
+      }
+    $scope.getIncidentLinksById = function(id) {
+        var links = $scope.network.links;
+        return links.filter(function (link) {
+          return link.from == id || link.to == id ;
+        })
+    }
+    $scope.getNextLink = function(node) {
+        var links = $scope.network.links;
+        var link = links.find(function (link) {
+          return link.to == node.id;
+        })
+        if (link != null) {
+          return link;
+        } else {
+          return links.find(function (link) {
+            return link.to == node.id;
+          })
         }
-    };
+    }
+    $scope.getPositionBetween = function(link) {
+      var p1 = $scope.getNodeById(link.from);
+      var p2 = $scope.getNodeById(link.to);
+      return {x: (p1.x + p2.x - 5) / 2, y: (p1.y + p2.y + 5) / 2}
+    }
 
     $scope.getApplication = function(){
         $http.get('http://localhost:9000/api/application/'+$scope.selectedExtidappli).then(function (response) {
@@ -29,17 +54,31 @@ app.controller('myCtrl', function ($scope, $http, $element) {
             }
 
             $scope.application = response.data;
-
-            $scope.setDefaultColors();
-            var node = $scope.network.body.nodes[$scope.application.status.code];
-            console.log(node);
-            node.setOptions({
-                font: {
-                    background: '#FFA07A'
-                }
-            });
-            $scope.network.body.emitter.emit('_dataChanged')
         });
+    }
+
+    $scope.isNodeSelected = function(node) {
+        return $scope.selectedNode
+               && $scope.selectedNode.id == node.id;
+    }
+
+    $scope.isLinkSelected = function(link) {
+        return $scope.selectedLink
+               && $scope.selectedLink.from == link.from
+               && $scope.selectedLink.to == link.to;
+    }
+
+    $scope.selectStatus = function(status) {
+      $scope.selectedNode = status;
+      $scope.selectedLink = null;
+      var nextLink = $scope.getNextLink(status);
+      if (nextLink == null) return;
+      $scope.selectedOperation = nextLink.operation;
+    }
+    $scope.selectOperation = function(operation) {
+      $scope.selectedNode = null;
+      $scope.selectedLink = operation;
+      $scope.selectedOperation = operation.operation;
     }
 
     $scope.init = function () {
@@ -51,65 +90,29 @@ app.controller('myCtrl', function ($scope, $http, $element) {
         $http.get('http://localhost:9000/api/network').then(function (response) {
             var data = response.data;
 
-            for (var i in data) {
-                var node = {
-                    id: data[i].id,
-                    label: data[i].status.name,
-                    x: data[i].position.xposition,
-                    y: data[i].position.yposition,
-                    allowedToMoveX: false,
-                    allowedToMoveY: false
+            var nodes = []
+            var links = []
 
-                };
-                var elementFrom = data[i].from;
-                for (var j in elementFrom) {
-                    var currentFrom = {
+            data.forEach(function (d) {
+                nodes.push({
+                    id: d.id,
+                    label: d.status.name,
+                    // TODO return correct coordinates in response
+                    x: d.position.xposition + 50,
+                    y: d.position.yposition - 50,
+                })
+                d.from.forEach(function (j) {
+                    links.push({
                         arrows: 'to',
-                        id: elementFrom[j].id,
-                        from: elementFrom[j].from,
-                        to: elementFrom[j].to,
-                        label: elementFrom[j].operation.code,
-                        operation: elementFrom[j].operation
-                    };
-                    fromList.push(currentFrom);
-                }
-                nodesList.push(node);
-            }
-
-            var nodes = new vis.DataSet(nodesList);
-            var edges = new vis.DataSet(fromList);
-            var container = document.querySelector('#stdnetwork');
-            var data = {
-                nodes: nodes,
-                edges: edges
-            };
-
-            var options = {
-
-                nodes: {
-                    shape: 'box',
-                    widthConstraint:
-                        {minimum: 100, maximum: 100},
-                    heightConstraint:
-                        {minimum: 60}
-                },
-                interaction: {dragNodes: false, zoomView: false, dragView: false},  //, dragView: false
-
-                physics: {enabled: false},
-
-            };
-
-           $scope.network = new vis.Network(container, data, options);
-            $scope.setDefaultColors();
-            $scope.network.on("click", function (properties) {
-                var nodeIds = properties.nodes;
-                var edgeIds = properties.edges;
-                if (edgeIds[0]) {
-                    $scope.selectedOperation = edges.get(edgeIds[0]).operation;
-                    $scope.$apply();
-                    console.log($scope.selectedOperation);
-                }
-            });
+                        id: j.id,
+                        from: j.from,
+                        to: j.to,
+                        label: j.operation.code,
+                        operation: j.operation
+                    });
+                })
+            })
+            $scope.network = {nodes: nodes, links: links};
         });
     }
 });
